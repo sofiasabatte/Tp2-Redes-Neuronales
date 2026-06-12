@@ -34,11 +34,11 @@ Se diseñó una CNN inspirada en AlexNet (Krizhevsky et al., 2012), adaptada a i
 
 Se aplicó transfer learning en 2 fases:
 1. **Feature extraction**: backbone congelado, solo se entrena el clasificador FC (LR=1e-3, Adam)
-2. **Fine-tuning**: se descongelan `layer3`, `layer4` + FC (LR=1e-4, SGD con momentum)
+2. **Fine tuning**: se descongelan `layer3`, `layer4` + FC (LR=1e-4, SGD con momentum)
 
 **Justificación según teoría de TL**: el dataset es de tamaño mediano y el dominio es diferente a ImageNet (lesiones de piel vs fotos naturales) , se prefiere congelar las primeras capas (que detectan bordes/texturas universales) y reentrenar las capas más profundas que codifican features de alto nivel + especificos.
 
----
+
 
 ### 2. Búsqueda de Hiperparámetros (`2_CNN_Busqueda_HP.ipynb`)
 
@@ -158,7 +158,7 @@ Se aplicó transfer learning en 2 fases:
 | Epochs | 23 (early stopping) |
 
 
-### BONUS — Transfer Learning con ResNet18 
+### BONUS: Transfer Learning con ResNet18 
  
 **Estrategia**: dataset mediano + dominio diferente a ImageNet (lesiones de piel vs fotos naturales) → congelar backbone, entrenar solo el clasificador (fase 1), después fine-tuning de las últimas capas (fase 2).
  
@@ -192,7 +192,6 @@ Se descongelan layer3, layer4 y FC. LR muy bajo para no destruir pesos preentren
  
 **Conclusión**: el fine-tuning no mejoró respecto a la fase 1. El backbone preentrenado ya capturó suficientes features útiles con solo entrenar el clasificador.
  
----
 
 
 
@@ -234,7 +233,6 @@ Se procedió con la evaluación definitiva del modelo campeón  utilizando el **
 - Melanoma — la peor (f1=0.43). Preocupante porque es la más crítica clínicamente.
 - Squamous cell carcinoma — f1=0.49, confusión con Actinic keratosis (su precursora, igual que en el MLP). Tiene sentido clínico: son fases de la misma enfermedad.
 - Dermatofibroma — f1=0.58.
----
- 
+
 
 
