@@ -13,4 +13,4 @@ Continuación del TP1 (MLP), ahora usando CNNs. El objetivo es superar el 60.95%
 
 ## Dataset
  
-El dataset va en `data/Split_smol/` (no incluido en el repo por tamaño).
+El dataset va en `data/Split_smol/` 
