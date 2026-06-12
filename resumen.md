@@ -130,27 +130,106 @@ Se aplicó transfer learning en 2 fases:
 ## 4. Refinamiento Manual de Candidatos Ganadores
 
 
-Finalmente el modelo ganador (con el que hice el test): 
+#### Configuración usada (HPs del mejor modelo, con el que hice el test): 
+
+| HP | Valor |
+|---|---|
+| Optimizer | Adam |
+| LR | 1e-4 |
+| Batch size | 16 |
+| Input size | 64×64 |
+| Dropout | 0.3 |
+| Weight decay | 0 |
+| VFlip | 0.5 |
+| RandomBrightnessContrast | 0.5 |
+| CLAHE | 0.3 |
+| Rotate | 0.4 |
+| Early stopping patience | 7 |
+
+#### Resultado
+
+| Métrica | Valor |
+|---|---|
+| Train Acc (último epoch) | 79.63% |
+| **Val Acc (mejor)** | **67.46%** |
+| Epochs | 23 (early stopping) |
+
+
+### BONUS — Transfer Learning con ResNet18 
+ 
+**Estrategia**: dataset mediano + dominio diferente a ImageNet (lesiones de piel vs fotos naturales) → congelar backbone, entrenar solo el clasificador (fase 1), después fine-tuning de las últimas capas (fase 2).
+ 
+**Input size**: 224×224 (resolución nativa de ResNet18).
+ 
+**Augmentations**: HFlip, VFlip, RandomBrightnessContrast, CLAHE, HueSaturationValue, Rotate.
+ 
+#### Fase 1 — Feature Extraction
+Backbone congelado. Solo se entrena el clasificador FC (Linear(512→256) + ReLU + Dropout(0.4) + Linear(256→9)).
+ 
+| Métrica | Valor |
+|---|---|
+| Train Acc (mejor epoch) | 72.22% |
+| **Val Acc (mejor)** | **80.47%** |
+| Epochs | 20 |
+| Optimizer | Adam lr=1e-3 |
+| Parámetros entrenables | 133,641 |
+ 
+#### Fase 2 — Fine-tuning
+Se descongelan layer3, layer4 y FC. LR muy bajo para no destruir pesos preentrenados.
+ 
+| Métrica | Valor |
+|---|---|
+| Train Acc (último epoch) | 80.19% |
+| **Val Acc (mejor)** | **80.47%** |
+| Epochs | 7 (early stopping) |
+| Optimizer | SGD lr=1e-4, momentum=0.9 |
+| Parámetros entrenables | 10,627,081 |
+ 
+**Conclusión**: el fine-tuning no mejoró respecto a la fase 1. El backbone preentrenado ya capturó suficientes features útiles con solo entrenar el clasificador.
+ 
+---
 
 
 
 
 ## 5. Test (Evaluación Final)
 Se procedió con la evaluación definitiva del modelo campeón  utilizando el **Test Set**.
+ 
+| Métrica | Valor |
+|---|---|
+| **Test Accuracy** | **70.41%** |
+| **Test Loss** | **0.7408** |
+ 
+### Reporte por clase
+ 
+| Clase | Precision | Recall | F1 | Support |
+|---|---|---|---|---|
+| Actinic keratosis | 0.85 | 0.55 | 0.67 | 20 |
+| Atopic Dermatitis | 0.89 | 1.00 | 0.94 | 16 |
+| Benign keratosis | 0.94 | 0.85 | 0.89 | 20 |
+| Dermatofibroma | 0.50 | 0.70 | 0.58 | 20 |
+| Melanocytic nevus | 0.58 | 0.70 | 0.64 | 20 |
+| Melanoma | 0.47 | 0.40 | 0.43 | 20 |
+| Squamous cell carcinoma | 0.48 | 0.50 | 0.49 | 20 |
+| Tinea Ringworm Candidiasis | 1.00 | 1.00 | 1.00 | 13 |
+| Vascular lesion | 0.94 | 0.80 | 0.86 | 20 |
+| **accuracy** | | | **0.70** | **169** |
+| macro avg | 0.74 | 0.72 | 0.72 | 169 |
+| weighted avg | 0.72 | 0.70 | 0.71 | 169 |
+ 
+### Análisis de la matriz de confusión
 
-#### Métricas Globales Obtenidas
-
-> Completar con accuracy en test del modelo campeón.
-
-| Modelo | Val Acc | Test Acc |
-|---|---|---|
-| MLP (proyecto anterior) | 65.58% | 60.95% |
-| CNN AlexNet-like (mejor manual) | — | — |
-| CNN AlexNet-like (mejor RS) | — | — |
-| ResNet18 fine-tuning | — | — |
-| **Campeón** | — | — |
-
-
-
-#### Análisis de la Matriz de Confusión de TEST
 ![](imagenes/testmatrix.png)
+ 
+**Clases que funcionaron muy bien:**
+- Tinea Ringworm Candidiasis — 100% en precision, recall y f1. Perfecta.
+- Atopic Dermatitis — 100% recall, el modelo no se perdió ningún caso.
+- Benign keratosis y Vascular lesion — muy sólidas (f1 > 0.85).
+**Clases problemáticas:**
+- Melanoma — la peor (f1=0.43). Preocupante porque es la más crítica clínicamente.
+- Squamous cell carcinoma — f1=0.49, confusión con Actinic keratosis (su precursora, igual que en el MLP). Tiene sentido clínico: son fases de la misma enfermedad.
+- Dermatofibroma — f1=0.58.
+---
+ 
+
+
