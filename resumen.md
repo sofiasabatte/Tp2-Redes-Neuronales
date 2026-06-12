@@ -153,3 +153,4 @@ Se procedió con la evaluación definitiva del modelo campeón  utilizando el **
 
 
 #### Análisis de la Matriz de Confusión de TEST
+![](imagenes/testmatrix.png)
