@@ -17,9 +17,9 @@ import mlflow.pytorch
 from torch.utils.tensorboard import SummaryWriter
 import torchvision.utils as vutils
 
-# ---------------------------------------------------------------------------
+
 # Utilidades de logging
-# ---------------------------------------------------------------------------
+
 
 def plot_to_tensorboard(fig, writer, tag, step):
     buf = io.BytesIO()
@@ -34,9 +34,9 @@ def plot_to_tensorboard(fig, writer, tag, step):
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
-# ---------------------------------------------------------------------------
+
 # Arquitecturas
-# ---------------------------------------------------------------------------
+
 
 class MLPClassifier(nn.Module):
     """MLP original del proyecto anterior (se conserva para comparación)."""
@@ -76,19 +76,19 @@ class AlexNetLike(nn.Module):
     def __init__(self, input_size=64, dropout=0.5, num_classes=9):
         super().__init__()
 
-        # --- Bloque 1: Conv grande inicial (como AlexNet) ---
+        # Bloque 1
         self.features = nn.Sequential(
             # Bloque 1
             nn.Conv2d(3, 32, kernel_size=3, padding=1),   # AlexNet usa 11x11 para 224px; adaptamos a 3x3
             nn.BatchNorm2d(32),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),                            # -> input_size/2
+            nn.MaxPool2d(2, 2),                            #  input_size/2
 
             # Bloque 2
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),                            # -> input_size/4
+            nn.MaxPool2d(2, 2),                            #  input_size/4
 
             # Bloque 3 (sin pooling, como las 3 capas del medio de AlexNet)
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
@@ -104,13 +104,13 @@ class AlexNetLike(nn.Module):
             nn.Conv2d(128, 64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),                            # -> input_size/8
+            nn.MaxPool2d(2, 2),                            #  input_size/8
         )
 
         spatial = input_size // 8
         flat_size = 64 * spatial * spatial
 
-        # --- Clasificador denso (análogo a las FC de AlexNet) ---
+        # Clasificador denso (análogo a las FC de AlexNet) 
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(flat_size, 512),
