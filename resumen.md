@@ -42,7 +42,6 @@ Se aplicó transfer learning en 2 fases:
 
 ### 2. Búsqueda de Hiperparámetros (`2_CNN_Busqueda_HP.ipynb`)
 
-(esto lo corri en colab)
 
 #### Espacio explorado
 
@@ -73,6 +72,10 @@ Se aplicó transfer learning en 2 fases:
 | rs_034 | 68.64 | 72.04 | 3.40 |
 
 **Modelo elegido: rs_040** — misma val acc que rs_068 (72.19%) pero con gap de solo 3.55 vs 23.37. rs_068 está claramente overfitteando.
+
+![](imagenes/valA40.png)
+
+
 
 ### Candidatos seleccionados (val_acc ≥ 65% y gap ≤ 10)
 
@@ -173,6 +176,8 @@ Backbone congelado. Solo se entrena el clasificador FC (Linear(512→256) + ReLU
 | Epochs | 20 |
 | Optimizer | Adam lr=1e-3 |
 | Parámetros entrenables | 133,641 |
+
+![](imagenes/resnet1valA.png)
  
 #### Fase 2 — Fine-tuning
 Se descongelan layer3, layer4 y FC. LR muy bajo para no destruir pesos preentrenados.
