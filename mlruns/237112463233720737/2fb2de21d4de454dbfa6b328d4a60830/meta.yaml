@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/ITBA/REDES%20NEURONALES/Tp2-Redes-Neuronales/mlruns/237112463233720737/2fb2de21d4de454dbfa6b328d4a60830/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '237112463233720737'
+lifecycle_stage: active
+run_id: 2fb2de21d4de454dbfa6b328d4a60830
+run_name: campeon_rs040
+run_uuid: 2fb2de21d4de454dbfa6b328d4a60830
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781289944261
+status: 1
+tags: []
+user_id: Sofia

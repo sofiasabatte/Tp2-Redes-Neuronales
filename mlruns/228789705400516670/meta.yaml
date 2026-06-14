@@ -1,0 +1,9 @@
+artifact_location: /content/drive/MyDrive/Tp2_Redes_Neuronales/mlruns/228789705400516670
+creation_time: 1781214208861
+effective_trace_archival_retention: null
+experiment_id: '228789705400516670'
+last_update_time: 1781214208861
+lifecycle_stage: active
+name: CNN_Dermatologia_RandomSearch
+trace_location: null
+workspace: default

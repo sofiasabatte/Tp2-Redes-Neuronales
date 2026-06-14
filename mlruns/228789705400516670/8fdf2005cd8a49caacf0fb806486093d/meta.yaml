@@ -1,0 +1,14 @@
+artifact_uri: /content/drive/MyDrive/Tp2_Redes_Neuronales/mlruns/228789705400516670/8fdf2005cd8a49caacf0fb806486093d/artifacts
+end_time: 1781215381155
+entry_point_name: ''
+experiment_id: '228789705400516670'
+lifecycle_stage: active
+run_id: 8fdf2005cd8a49caacf0fb806486093d
+run_name: rs_009
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781215269578
+status: 3
+tags: []
+user_id: root
