@@ -45,13 +45,13 @@ Se aplicó transfer learning en 2 fases:
 
 #### Espacio explorado
 
-- `input_size`: 32, 64
-- `batch_size`: 16, 32
-- `lr`: 1e-3, 1e-4
-- `optimizer`: SGD, Adam
-- `momentum`: 0.9, 0.99
-- `weight_decay`: 0, 1e-4, 1e-3
-- `dropout`: 0.0, 0.2, 0.3, 0.5
+- input_size: 32, 64
+- batch_size: 16, 32
+- lr: 1e-3, 1e-4
+- optimizer: SGD, Adam
+- momentum: 0.9, 0.99
+- weight_decay: 0, 1e-4, 1e-3
+- dropout: 0.0, 0.2, 0.3, 0.5
 - Probabilidades de augmentations: HFlip, VFlip, RBContrast, CLAHE, HSV, Rotate
 
 
@@ -123,7 +123,7 @@ Se aplicó transfer learning en 2 fases:
 5. **¿Qué dropout fue más efectivo?**  
    Dropout 0.0 y 0.3 fueron los mejores. Dropout 0.5 fue claramente el peor, apagaba demasiadas neuronas.
 
-6. **Mejor modelo encontrado**: Run `rs_040` con val acc `72.18%`.
+6. **Mejor modelo encontrado**: Run rs_040 con val acc 72.18%.
 
 
 
