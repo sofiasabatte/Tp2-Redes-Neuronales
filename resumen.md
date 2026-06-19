@@ -8,7 +8,7 @@ Retomo el problema de clasificación de 9 clases de lesiones dermatológicas del
 ### 0. EDA
 Sin cambios respecto al proyecto anterior. 
 
-### 1. CNN Simple: Prueba Manual (`1_CNN_Simple.ipynb`)
+### 1. CNN Simple: Prueba Manual (1_CNN_Simple.ipynb)
 
 #### Arquitectura: AlexNet-like
 Se diseñó una CNN inspirada en AlexNet (Krizhevsky et al., 2012), adaptada a imágenes pequeñas:
@@ -34,13 +34,13 @@ Se diseñó una CNN inspirada en AlexNet (Krizhevsky et al., 2012), adaptada a i
 
 Se aplicó transfer learning en 2 fases:
 1. **Feature extraction**: backbone congelado, solo se entrena el clasificador FC (LR=1e-3, Adam)
-2. **Fine tuning**: se descongelan `layer3`, `layer4` + FC (LR=1e-4, SGD con momentum)
+2. **Fine tuning**: se descongelan layer3, layer4 + FC (LR=1e-4, SGD con momentum)
 
 **Justificación según teoría de TL**: el dataset es de tamaño mediano y el dominio es diferente a ImageNet (lesiones de piel vs fotos naturales) , se prefiere congelar las primeras capas (que detectan bordes/texturas universales) y reentrenar las capas más profundas que codifican features de alto nivel + especificos.
 
 
 
-### 2. Búsqueda de Hiperparámetros (`2_CNN_Busqueda_HP.ipynb`)
+### 2. Búsqueda de Hiperparámetros (2_CNN_Busqueda_HP.ipynb)
 
 
 #### Espacio explorado
@@ -54,7 +54,6 @@ Se aplicó transfer learning en 2 fases:
 - `dropout`: 0.0, 0.2, 0.3, 0.5
 - Probabilidades de augmentations: HFlip, VFlip, RBContrast, CLAHE, HSV, Rotate
 
-**Total**: ~6144 combinaciones → se muestreó ~5% (~307 corridas) con Random Search.
 
 ### Top 10 modelos
 
@@ -197,7 +196,7 @@ Se descongelan layer3, layer4 y FC. LR muy bajo para no destruir pesos preentren
 
 
 ## 5. Test (Evaluación Final)
-Se procedió con la evaluación definitiva del modelo campeón  utilizando el **Test Set**.
+Se procedió con la evaluación definitiva del modelo campeón (ResNet18, fase 1 — feature extraction, entrenado con los HPs óptimos hallados en la búsqueda) utilizando el Test Set.
  
 | Métrica | Valor |
 |---|---|
