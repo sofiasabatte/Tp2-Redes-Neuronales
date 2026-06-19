@@ -228,6 +228,7 @@ Se procedió con la evaluación definitiva del modelo campeón (ResNet18, fase 1
 - Tinea Ringworm Candidiasis — 100% en precision, recall y f1. Perfecta.
 - Atopic Dermatitis — 100% recall, el modelo no se perdió ningún caso.
 - Benign keratosis y Vascular lesion — muy sólidas (f1 > 0.85).
+
 **Clases problemáticas:**
 - Melanoma — la peor (f1=0.43). Preocupante porque es la más crítica clínicamente.
 - Squamous cell carcinoma — f1=0.49, confusión con Actinic keratosis (su precursora, igual que en el MLP). Tiene sentido clínico: son fases de la misma enfermedad.
